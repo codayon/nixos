@@ -1,1 +1,2 @@
-# nixos
+# My NixOS Configuration
+> In this repo, I will be continuously updating my current nixos configuration. There are several reasons why I use NixOS instead of other distrobutions but the reasons I want to highlight is that I wanted to learn something different (as well as difficult) and it feels easier and fun to me just because of the declarative manner or approach, (whatever it is called) I like it this way. But surely, I would not everyone to choose this distro over something like debian or maybe I will depending on the person and their motives.
