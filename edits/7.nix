@@ -61,13 +61,16 @@
   # hardware
   hardware = {
     pulseaudio.enable = false;
-    enable = true;
-    extraPackages = with pkgs; [
-      vpl-gpu-rt
-      libvdpau-va-gl
-      intel-media-driver
-      intel-compute-runtime
-    ];
+
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        vpl-gpu-rt
+        libvdpau-va-gl
+        intel-media-driver
+        intel-compute-runtime
+      ];
+    };
   };
 
   # security
