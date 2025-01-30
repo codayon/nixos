@@ -1,11 +1,12 @@
-{ config, pkgs, inputs, ... }:
-
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./packages.nix
-    ];
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+    ./packages.nix
+  ];
 
   boot = {
     loader = {
@@ -72,7 +73,7 @@
 
   xdg = {
     portal = {
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
       config = {
         common = {
           default = "gtk";
@@ -90,7 +91,7 @@
   };
 
   hardware = {
-    pulseaudio = { enable = false; };
+    pulseaudio = {enable = false;};
     graphics = {
       enable = true;
       extraPackages = with pkgs; [
@@ -111,7 +112,7 @@
     users.codayon = {
       isNormalUser = true;
       description = "Reshad Ahammed Ayon";
-      extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+      extraGroups = ["networkmanager" "wheel" "libvirtd"];
       packages = with pkgs; [
         kdePackages.kate
       ];
@@ -145,12 +146,11 @@
 
   nix = {
     settings.experimental-features = [
-    "nix-command"
-    "flakes"
+      "nix-command"
+      "flakes"
     ];
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    nixPath = ["nixpkgs=flake:${inputs.nixpkgs}"];
   };
 
   system.stateVersion = "24.11";
-
 }

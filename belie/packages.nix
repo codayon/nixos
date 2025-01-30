@@ -8,6 +8,7 @@
       btop
       nixd
       wget
+      brave
       unzip
       kitty
       ranger
@@ -19,6 +20,7 @@
       vscodium
       alejandra
       keepassxc
+      librewolf
       fastfetch
       obs-studio
       ffmpeg-full
