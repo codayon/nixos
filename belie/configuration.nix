@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   inputs,
   ...
@@ -9,6 +10,7 @@
   ];
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -20,9 +22,7 @@
     networkmanager.enable = true;
   };
 
-  time = {
-    timeZone = "Asia/Dhaka";
-  };
+  time.timeZone = "Asia/Dhaka";
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
@@ -51,6 +51,11 @@
     printing.enable = true;
     displayManager.sddm.enable = true;
     desktopManager.plasma6.enable = true;
+    hardware.openrgb = {
+      enable = true;
+      package = pkgs.openrgb-with-all-plugins;
+      motherboard = "intel";
+    };
     xserver = {
       enable = true;
       xkb = {
@@ -71,27 +76,16 @@
     };
   };
 
-  xdg = {
-    portal = {
-      extraPortals = [pkgs.xdg-desktop-portal-gtk];
-      config = {
-        common = {
-          default = "gtk";
-        };
-      };
+  xdg.portal = {
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    config.common = {
+      default = "gtk";
     };
   };
-
-  environment = {
-    plasma6 = {
-      excludePackages = with pkgs.kdePackages; [
-        konsole
-      ];
-    };
-  };
-
+  # hardware.intel-gpu-tools.enable
   hardware = {
-    pulseaudio = {enable = false;};
+    intel-gpu-tools.enable = true;
+    pulseaudio.enable = false;
     graphics = {
       enable = true;
       extraPackages = with pkgs; [
@@ -101,11 +95,7 @@
     };
   };
 
-  security = {
-    rtkit = {
-      enable = true;
-    };
-  };
+  security.rtkit.enable = true;
 
   users = {
     defaultUserShell = pkgs.zsh;
@@ -119,10 +109,26 @@
     };
   };
 
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-unwrapped"
+      "steam-original"
+      "steam-run"
+    ];
+
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [konsole];
+
   programs = {
     firefox.enable = true;
     kdeconnect.enable = true;
     virt-manager.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+      extraCompatPackages = with pkgs; [proton-ge-bin];
+    };
     zsh = {
       enable = true;
       autosuggestions.enable = true;

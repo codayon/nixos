@@ -1,11 +1,7 @@
 {
-  description = "you are noob";
+  description = "yoinked from a website";
 
-  inputs = {
-    nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-24.11";
-    };
-  };
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
   outputs = {
     self,
